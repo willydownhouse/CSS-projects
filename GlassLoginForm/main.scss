@@ -1,0 +1,275 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: #fff;
+
+  font-family: "Nunito", sans-serif;
+  font-weight: 400;
+}
+
+.container {
+  position: relative;
+  min-height: 100vh;
+  /* background: linear-gradient(
+    to right bottom,
+    rgba(235, 172, 194, 0.8),
+    rgba(16, 207, 112, 0.7)
+  ); */
+  background: linear-gradient(
+      217deg,
+      rgba(255, 0, 0, 0.8),
+      rgba(255, 0, 0, 0) 70.71%
+    ),
+    linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.box {
+  padding: 4rem 2rem;
+  text-align: center;
+  width: 380px;
+  height: 410px;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0)
+  );
+  border-radius: 30px;
+  backdrop-filter: blur(2rem);
+  z-index: 10;
+
+  h2 {
+    margin-bottom: 3rem;
+  }
+
+  .form {
+    width: 100%;
+    text-align: left;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+
+    input {
+      width: 100%;
+      height: 35px;
+      border-radius: 20px;
+      border: 0;
+      outline: 0;
+      background: linear-gradient(
+        rgba(255, 255, 255, 0.4),
+        rgba(255, 255, 255, 0.2)
+      );
+      padding-left: 10px;
+      margin-bottom: 1rem;
+    }
+
+    input::placeholder {
+      color: #fff;
+      font-family: "Nunito", sans-serif;
+    }
+  }
+
+  button {
+    padding: 0.7rem 1.6rem;
+    border-radius: 30px;
+    border: 0;
+    outline: 0;
+    background: #fff;
+
+    cursor: pointer;
+    font-family: "Nunito", sans-serif;
+    transition: all 0.2s;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    &:active {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.circle {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+
+  border-radius: 50%;
+}
+
+#circle-1 {
+  top: 15%;
+  left: 25%;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.1)
+  );
+
+  animation: fanni 90s infinite;
+}
+#circle-2 {
+  width: 500px;
+  height: 500px;
+  bottom: -14%;
+  right: 13%;
+  background: linear-gradient(
+    to right top,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0)
+  );
+  animation: mike 60s infinite;
+}
+#circle-3 {
+  width: 100px;
+  height: 100px;
+  bottom: 6%;
+  left: 11%;
+  background: linear-gradient(
+    to right top,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.1)
+  );
+  animation: pena 45s infinite;
+}
+
+.square {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  position: absolute;
+  top: 40%;
+  right: 30%;
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.2)
+  );
+  z-index: 3;
+  backdrop-filter: blur(1rem);
+  animation: aosta 50s infinite;
+}
+
+.two {
+  width: 80px;
+  height: 80px;
+  top: 10%;
+  right: 42%;
+  z-index: 12;
+  animation: john 90s infinite;
+  opacity: 0.4;
+}
+
+@keyframes mike {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  30% {
+    transform: translate(150%, -100%);
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0)
+    );
+    width: 320px;
+    height: 320px;
+  }
+
+  55% {
+    transform: translate(-20%, -100%);
+    background: linear-gradient(
+      to left bottom,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0)
+    );
+    width: 270px;
+    height: 270px;
+  }
+
+  80% {
+    transform: translate(-100%, -46%);
+    width: 390px;
+    height: 390px;
+    background: linear-gradient(
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.1)
+    );
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes john {
+  33% {
+    transform: translate(40%, -150%);
+  }
+
+  66% {
+    transform: translate(-500%, 60%);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+@keyframes pena {
+  33% {
+    transform: translate(40%, -150%);
+  }
+
+  66% {
+    transform: translate(-100%, -60%);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+@keyframes aosta {
+  33% {
+    transform: translate(-300%, -150%);
+  }
+
+  66% {
+    transform: translate(-100%, -60%);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+@keyframes fanni {
+  33% {
+    transform: translate(-12%, 54%);
+  }
+
+  66% {
+    transform: translate(16%, 13%);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
