@@ -144,6 +144,92 @@ p {
   opacity: 0;
 }
 
+#section-1 {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+  perspective-origin: 50% 50%;
+}
+
+.right {
+  width: 50%;
+  height: 100%;
+}
+
+.square {
+  transform-style: preserve-3d;
+  width: 20rem;
+  height: 20rem;
+  position: relative;
+  animation: loop 30s linear infinite;
+}
+
+.side {
+  position: absolute;
+  opacity: 1;
+  width: inherit;
+  height: inherit;
+}
+
+#side-1 {
+  background: linear-gradient(
+    to left top,
+    rgba(138, 10, 138, 0.342),
+    rgba(78, 8, 67, 0.329)
+  );
+  transform: rotateY(0deg) translateZ(10rem);
+}
+#side-2 {
+  background: linear-gradient(
+    to left top,
+    rgba(138, 10, 138, 0.342),
+    rgb(114, 15, 109, 0.7)
+  );
+  transform: rotateY(90deg) translateZ(10rem);
+}
+#side-3 {
+  background: linear-gradient(
+    to left top,
+    rgba(138, 10, 138, 0.342),
+    rgb(114, 15, 109, 0.7)
+  );
+  transform: rotateY(180deg) translateZ(10rem);
+}
+#side-4 {
+  background: linear-gradient(
+    to left top,
+    rgba(138, 10, 138, 0.342),
+    rgb(114, 15, 109, 0.7)
+  );
+  transform: rotateY(-90deg) translateZ(10rem);
+}
+#side-5 {
+  background: linear-gradient(
+    to left top,
+    rgba(138, 10, 138, 0.342),
+    rgb(114, 15, 109, 0.7)
+  );
+  transform: rotateX(90deg) translateZ(10rem);
+}
+#side-6 {
+  background: linear-gradient(
+    to left top,
+    rgba(138, 10, 138, 0.342),
+    rgb(114, 15, 109, 0.7)
+  );
+  transform: rotateX(-90deg) translateZ(10rem);
+}
+
 /* .hidden {
   display: none;
 } */
@@ -154,6 +240,15 @@ p {
 
 .hide {
   animation: fanni 0.5s forwards;
+}
+
+@keyframes loop {
+  from {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
 }
 
 @keyframes kimi {
