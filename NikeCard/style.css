@@ -1,0 +1,160 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  background: linear-gradient(to left, rgb(15, 17, 19), rgb(25, 27, 29));
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  background: linear-gradient(to bottom, rgb(35, 38, 41), rgb(50, 53, 57));
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+.circle {
+  position: absolute;
+  right: -60%;
+  top: -60%;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: rgb(0, 68, 133);
+  z-index: 2;
+  transform: scale(0.3);
+  transition: all 0.5s ease;
+  transition-delay: 0.2;
+}
+
+.card h2 {
+  position: absolute;
+  font-size: 180px;
+  left: 50%;
+  bottom: 10%;
+  transform: translate(-50%, -10%);
+  color: #333;
+  opacity: 0.6;
+  font-weight: 900;
+}
+
+.sneaker {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, 10%) rotate(-25deg);
+  width: 280px;
+  z-index: 2;
+  transition: 0.5s all ease;
+}
+
+.content {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  color: #fff;
+  transform: translate(-50%, 300%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.5s all ease;
+  transition-delay: 0.1s;
+}
+
+.title {
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+#buy {
+  display: inline-block;
+  color: #111;
+  padding: 10px 25px;
+
+  background: #e5e5e5;
+  text-decoration: none;
+  margin-top: 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 600;
+}
+
+.size {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.size p {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.size a {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: #e5e5e5;
+  color: #111;
+  text-decoration: none;
+  text-align: center;
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.color {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color p {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.ball {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background: red;
+}
+
+.ball.green {
+  background: greenyellow;
+}
+.ball.blue {
+  background: rgb(0, 68, 133);
+}
+.ball.orange {
+  background: rgb(190, 26, 190);
+}
+
+.card:hover .content {
+  transform: translate(-50%, -5%);
+  opacity: 1;
+}
+
+.card:hover .sneaker {
+  transform: translate(-50%, -20%) rotate(-25deg);
+}
+
+.card:hover .circle {
+  transform: scale(1.1);
+}

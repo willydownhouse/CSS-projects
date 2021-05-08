@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  min-height: 100vh;
+  background-color: #fff;
+  position: relative;
+}
+
+.menu {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  cursor: pointer;
+}
+
+.burger {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.beef {
+  width: 60px;
+  height: 3px;
+  border-radius: 5px;
+  background: #111;
+  transition: all 0.5s ease;
+}
+
+.beef::before,
+.beef::after {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 3px;
+  background: #111;
+  border-radius: 5px;
+  transition: all 0.5s ease;
+}
+
+.beef::before {
+  transform: translateY(-10px);
+}
+
+.beef::after {
+  transform: translateY(10px);
+}
+
+.burger.open .beef {
+  transform: translateX(-50%);
+  background: transparent;
+}
+
+.burger.open .beef::before {
+  transform: rotate(45deg) translate(35px, -35px);
+}
+.burger.open .beef::after {
+  transform: rotate(-45deg) translate(35px, 35px);
+}
