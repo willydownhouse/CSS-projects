@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    to right bottom,
+    rgb(149, 202, 156),
+    rgb(218, 81, 218)
+  );
+}
+
+.burger {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.beef {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  background: #fff;
+  border-radius: 10px;
+  transition: all 0.5s ease;
+}
+
+.beef::before,
+.beef::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 10px;
+  transition: all 0.5s ease;
+}
+
+.beef::after {
+  transform: translateY(25px);
+}
+.beef::before {
+  transform: translateY(-25px);
+}
+
+.burger.open .beef {
+  transform: translateX(-100px);
+  background: transparent;
+}
+
+.burger.open .beef::before {
+  transform: rotate(45deg) translate(35px, -35px);
+}
+.burger.open .beef::after {
+  transform: rotate(-45deg) translate(35px, 35px);
+}

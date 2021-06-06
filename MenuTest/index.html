@@ -22,6 +22,13 @@
       </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+      const burger = document.querySelector(".burger");
+      const beef = document.querySelector(".beef");
+
+      burger.addEventListener("click", (e) => {
+        burger.classList.toggle("open");
+      });
+    </script>
   </body>
 </html>

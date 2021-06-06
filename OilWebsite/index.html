@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      src="https://kit.fontawesome.com/415dfa391f.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="css/main.css" />
+    <title>35°North</title>
+  </head>
+  <body>
+    <div class="menu">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Olive Oil</a></li>
+        <li><a href="#">Shipping</a></li>
+      </ul>
+    </div>
+    <div class="burger">
+      <div class="beef"></div>
+    </div>
+    <nav class="nav-bar">
+      <div class="logo">
+        <p>35°N</p>
+      </div>
+      <div class="account">
+        <i class="far fa-user"></i>
+      </div>
+    </nav>
+
+    <header class="header">
+      <div class="content">
+        <h1>Award winning taste</h1>
+        <h2>35°N Greek Extra Virgin Olive Oil</h2>
+        <a class="link-white" href="#"
+          >Buy now <i class="fas fa-chevron-right"></i
+        ></a>
+      </div>
+    </header>
+    <script>
+      const burger = document.querySelector(".burger");
+      const menu = document.querySelector(".menu");
+
+      burger.addEventListener("click", function () {
+        burger.classList.toggle("open");
+        menu.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>

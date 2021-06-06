@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <title>ScrollTrigger</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="panel" id="page-1">
+        <h1 class="title-1">Haloo Lyngen</h1>
+      </div>
+      <div class="panel" id="page-2">
+        <h1 class="title-2">Haloo Aosta</h1>
+      </div>
+      <div class="panel" id="page-3">
+        <h1 class="title-3">Haloo Oulu</h1>
+        <div class="box">
+          <div class="bag-1"></div>
+          <div class="bag-2"></div>
+        </div>
+      </div>
+      <div class="panel" id="page-4">
+        <h1 class="title-4">Ciao Rooma</h1>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/ScrollTrigger.min.js"></script>
+
+    <script>
+      //page1
+      const tl = new TimelineLite({ defaults: { duration: 1 } });
+
+      tl.from("#page-1", { background: "#111" }).fromTo(
+        ".title-1",
+        {
+          y: "100%",
+          opacity: 0,
+          ease: "power1",
+        },
+        {
+          y: 0,
+          opacity: 1,
+          ease: "power1",
+        }
+      );
+
+      //page2
+      gsap.fromTo(
+        ".title-2",
+        1,
+        {
+          opacity: 0,
+          y: "100%",
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scrollTrigger: {
+            trigger: "#page-2",
+            start: "top 10%",
+          },
+        }
+      );
+
+      //page3
+      gsap.fromTo(
+        ".bag-1",
+        1,
+        {
+          opacity: 0,
+          x: "-500px",
+        },
+        {
+          opacity: 1,
+          x: 0,
+          scrollTrigger: {
+            trigger: "#page-3",
+            start: "top top",
+            end: "bottom 70%",
+            toggleActions: "restart reverse none none",
+            markers: true,
+          },
+        }
+      );
+
+      gsap.from(".bag-2", {
+        scrollTrigger: {
+          trigger: "#page-3",
+          start: "top 20%",
+        },
+        opacity: 1,
+        x: "600px",
+        ease: "power2",
+      });
+      // gsap.from(".title-3", {
+      //   scrollTrigger: {
+      //     trigger: "#page-3",
+      //     start: "top 20%",
+      //   },
+      //   opacity: 1,
+      //   scale: 2,
+      //   rotation: 360,
+      //   color: "red",
+      //   ease: "power2",
+      // });
+    </script>
+  </body>
+</html>
