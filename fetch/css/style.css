@@ -1,0 +1,47 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.section {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 5fr;
+  background-color: #e9e9e9;
+}
+
+.form-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form {
+  width: 500px;
+  padding: 20px;
+}
+
+.render {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error {
+  border: 1px solid red;
+}
+
+.error-text {
+  color: red;
+}
+
+.show {
+  opacity: 1;
+  transition: 1s all ease;
+}
+
+.hide {
+  opacity: 0;
+  transition: 1s all ease;
+}
