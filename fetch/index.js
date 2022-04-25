@@ -1,66 +1,37 @@
 'use strict';
 
-const section = document.querySelector('.section');
-const form = document.querySelector('.form');
-const nameInput = document.getElementById('name');
-const errorText = document.querySelector('.error-text');
-const render = document.querySelector('.render');
+//261
 
-form.addEventListener('submit', e => {
-  e.preventDefault();
-  render.innerHTML = '';
-  if (nameInput.value === '') {
-    nameInput.classList.add('error');
-    errorText.textContent = 'Required';
-    return;
-  }
+const box = document.querySelector('.box');
+const url =
+  'https://images.pexels.com/photos/8210512/pexels-photo-8210512.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
 
-  fetchCountries(nameInput.value);
-  nameInput.value = '';
-});
+const url2 =
+  'https://images.pexels.com/photos/7363341/pexels-photo-7363341.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
 
-nameInput.addEventListener('input', e => {
-  if (e.target.value.length > 0) {
-    nameInput.classList.remove('error');
-    errorText.textContent = '';
-  }
-});
+const createImage = url => {
+  const img = document.createElement('img');
 
-section.addEventListener('click', e => {
-  if (!e.target.closest('form')) {
-    nameInput.classList.remove('error');
-    errorText.textContent = '';
-  }
-});
+  img.src = url;
 
-function fetchCountries(country) {
-  fetch(`https://restcountries.com/v3.1/name/${country}`)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      renderCountry(data[0]);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-}
-
-function renderCountry(country) {
-  const html = ` <div>
-    <h4 id="title">${country.name.common}</h4>
-    <div>
-        <img id="logo" width=200 src=${country.coatOfArms.png}/>
-    </div>
-</div>`;
-
-  render.insertAdjacentHTML('beforeend', html);
-
-  const logo = document.getElementById('logo');
-
-  logo.classList.add('hide');
-
-  logo.addEventListener('load', () => {
-    logo.classList.remove('hide');
-    logo.classList.add('show');
+  img.addEventListener('load', () => {
+    console.log('image loaded');
+    img.style.opacity = 1;
+    box.appendChild(img);
   });
-}
+
+  return new Promise((resolve, reject) => {
+    resolve(img);
+  });
+};
+
+createImage(url)
+  .then(img => {
+    console.log(img);
+    setTimeout(() => {
+      img.style.opacity = 0;
+      console.log('img go away');
+    }, 2000);
+  })
+  //.then(img => console.log('second img', img))
+  .catch(err => console.log(err));
