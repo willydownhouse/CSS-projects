@@ -53,10 +53,26 @@ const renderImages = async () => {
   }
 };
 
-renderImages();
+//renderImages();
 
 function wait(seconds) {
   return new Promise(resolve => {
     setTimeout(resolve, seconds * 1000);
   });
 }
+
+const Bike = function (name, price) {
+  this.name = name;
+  this.price = price;
+};
+
+const jopo = new Bike('jopo', 299);
+
+Bike.prototype.ride = function () {
+  console.log(`I am riding my ${this.name} bike`);
+};
+
+jopo.ride();
+console.log(jopo.__proto__.hasOwnProperty('ride'));
+
+console.log(jopo);
