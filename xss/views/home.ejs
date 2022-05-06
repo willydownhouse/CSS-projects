@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App</title>
+  </head>
+  <body>
+    <h1>My xss App</h1>
+    <form class="form">
+      <input class="form-input" />
+      <button class="btn-submit" type="submit">Submit</button>
+    </form>
+
+    <div style="margin-top: 30px">
+      <p>You requested order with number: <%= input %></p>
+    </div>
+    <script>
+      const form = document.querySelector(".form");
+      const input = document.querySelector(".form-input");
+      const btn = document.querySelector(".btn-submit");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        console.log(input.value);
+        const url = `http://localhost:3001/order/?action=${input.value}`;
+        fetch(url)
+          .then((res) => window.location.assign(url))
+
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    </script>
+  </body>
+</html>
