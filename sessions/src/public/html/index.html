@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sessions</title>
+
+    <style>
+      .container {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      form {
+        width: 500px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <form id="form">
+        <div class="mb-3">
+          <label>Username</label>
+          <input class="form-control" type="text" required id="username" />
+        </div>
+        <div class="mb-3">
+          <label>Password</label>
+          <input class="form-control" type="text" required id="password" />
+        </div>
+        <button id="submit" class="btn btn-primary">Sign in</button>
+      </form>
+    </div>
+
+    <script>
+      const form = document.getElementById("form");
+      const username = document.getElementById("username");
+      const password = document.getElementById("password");
+      const btn = document.getElementById("btn");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        fetch("/login", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username.value,
+            password: password.value,
+          }),
+        })
+          .then((res) => res)
+          .catch((err) => console.log(err));
+      });
+    </script>
+  </body>
+</html>
