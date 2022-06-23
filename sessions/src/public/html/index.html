@@ -66,8 +66,18 @@
             password: password.value,
           }),
         })
-          .then((res) => res)
-          .catch((err) => console.log(err));
+          .then((res) => {
+            console.log(res);
+            if (res.ok) {
+              return window.location.assign("/home");
+            }
+
+            return window.location.assign("/fail");
+          })
+          .catch((err) => {
+            console.log(err);
+            //window.location.assign("/");
+          });
       });
     </script>
   </body>
