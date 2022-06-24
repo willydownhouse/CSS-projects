@@ -9,6 +9,7 @@ app.use(express.json());
 
 const oneDay = 1000 * 60 * 60 * 24;
 
+//CREATES SESSION, SECRET -> .ENV
 app.use(
   sessions({
     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
@@ -20,6 +21,13 @@ app.use(
 
 // cookie parser middleware
 app.use(cookieParser());
+
+app.use((req, res, next) => {
+  console.log("REQ:");
+  console.log(req.session);
+
+  next();
+});
 
 const user = {
   name: "keke",
@@ -53,17 +61,32 @@ app.post("/login", (req, res) => {
   if (user.name === username && user.pass === password) {
     session = req.session;
     session.userid = username;
-    console.log("SUCCESFULL SIGN IN:");
-    console.log(req.session);
+
+    //AFTER LOGIN TALLENNA SESSION ID, ESIM REDIS
+    // console.log("SUCCESFULL SIGN IN:");
+    // console.log(req.session);
+    // console.log(req.sessionID);
+
+    // RES.COOKIE, SESSION ID
+
+    res.cookie("sessionID", req.sessionID, {
+      maxAge: oneDay,
+      httpOnly: true,
+    });
+
     return res.status(200).send("succesfull log in");
   }
 
-  res.status(401).send("wrong username or password");
+  return res.status(401).send("wrong username or password");
 });
 
-// LOGOUT
+// LOGOUT -> DESTROY SESSION, POISTA ID REDIS
 app.get("/logout", (req, res) => {
   req.session.destroy();
+  res.cookie("sessionID", "logged out", {
+    maxAge: 1000 * 2,
+    httpOnly: true,
+  });
   res.send("you logged out");
 });
 
