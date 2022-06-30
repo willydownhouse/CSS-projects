@@ -2,8 +2,26 @@ const express = require("express");
 const path = require("path");
 const sessions = require("express-session");
 const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
+
+const MongoStore = require("connect-mongo");
 
 const app = express();
+
+const dbString = "mongodb://localhost:27017/sessions_db";
+
+mongoose
+  .createConnection(dbString)
+  .asPromise()
+  .then(() => console.log("db connected"))
+  .catch((err) => {
+    console.log(`error connecting db`, err);
+  });
+
+const sessionStore = MongoStore.create({
+  mongoUrl: dbString,
+  collectionName: "session",
+});
 
 app.use(express.json());
 
@@ -14,6 +32,7 @@ app.use(
   sessions({
     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
     saveUninitialized: true,
+    store: sessionStore,
     cookie: { maxAge: oneDay },
     resave: false,
   })
@@ -25,6 +44,7 @@ app.use(cookieParser());
 app.use((req, res, next) => {
   console.log("REQ:");
   console.log(req.session);
+  console.log(req.sessionID);
 
   next();
 });
