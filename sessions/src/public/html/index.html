@@ -33,21 +33,33 @@
   </head>
   <body>
     <div class="container">
-      <form id="form">
+      <form id="form" action="/login" method="POST">
         <div class="mb-3">
           <label>Username</label>
-          <input class="form-control" type="text" required id="username" />
+          <input
+            class="form-control"
+            type="text"
+            required
+            id="username"
+            name="username"
+          />
         </div>
         <div class="mb-3">
           <label>Password</label>
-          <input class="form-control" type="text" required id="password" />
+          <input
+            class="form-control"
+            type="text"
+            required
+            id="password"
+            name="password"
+          />
         </div>
         <button id="submit" class="btn btn-primary">Sign in</button>
       </form>
     </div>
 
     <script>
-      const form = document.getElementById("form");
+      /*  const form = document.getElementById("form");
       const username = document.getElementById("username");
       const password = document.getElementById("password");
       const btn = document.getElementById("btn");
@@ -78,7 +90,7 @@
             console.log(err);
             //window.location.assign("/");
           });
-      });
+      }); */
     </script>
   </body>
 </html>

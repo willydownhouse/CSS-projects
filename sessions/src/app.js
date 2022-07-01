@@ -24,6 +24,7 @@ const sessionStore = MongoStore.create({
 });
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const oneDay = 1000 * 60 * 60 * 24;
 
@@ -44,7 +45,8 @@ app.use(cookieParser());
 app.use((req, res, next) => {
   console.log("REQ:");
   console.log(req.session);
-  console.log(req.sessionID);
+  console.log("USER:", req.sessionID);
+  console.log(req.cookies);
 
   next();
 });
@@ -74,8 +76,6 @@ app.get("/fail", (req, res) => {
 
 //LOGIN
 app.post("/login", (req, res) => {
-  console.log(req.body);
-
   const { username, password } = req.body;
 
   if (user.name === username && user.pass === password) {
@@ -94,7 +94,7 @@ app.post("/login", (req, res) => {
       httpOnly: true,
     });
 
-    return res.status(200).send("succesfull log in");
+    return res.redirect("/home");
   }
 
   return res.status(401).send("wrong username or password");
