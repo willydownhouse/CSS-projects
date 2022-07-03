@@ -2,33 +2,27 @@ const express = require("express");
 const path = require("path");
 const sessions = require("express-session");
 const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
-
+const passport = require("passport");
 const MongoStore = require("connect-mongo");
+const LocalStrategy = require("passport-local").Strategy;
+const { dbString } = require("./config");
+const authRouter = require("./router/authRouter");
 
 const app = express();
-
-const dbString = "mongodb://localhost:27017/sessions_db";
-
-mongoose
-  .createConnection(dbString)
-  .asPromise()
-  .then(() => console.log("db connected"))
-  .catch((err) => {
-    console.log(`error connecting db`, err);
-  });
-
-const sessionStore = MongoStore.create({
-  mongoUrl: dbString,
-  collectionName: "session",
-});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const oneDay = 1000 * 60 * 60 * 24;
 
+const sessionStore = MongoStore.create({
+  mongoUrl: dbString,
+  collectionName: "session",
+});
+
 //CREATES SESSION, SECRET -> .ENV
+
+console.log("before express session on app");
 app.use(
   sessions({
     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
@@ -39,76 +33,73 @@ app.use(
   })
 );
 
+///////
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(authUser));
+
+function authUser(user, password, done) {
+  const authenticated_user = {
+    name: "keke",
+    pass: "test1234",
+  };
+  console.log("AUTH USER");
+  console.log("user", user);
+  console.log("password", password);
+
+  if (user === "keke" && password === "test1234") {
+    return done(null, authenticated_user);
+  }
+
+  return done(null, false);
+}
+
+passport.serializeUser((userObj, done) => {
+  console.log("serializeUser:", userObj);
+  done(null, userObj);
+});
+
+passport.deserializeUser((userObj, done) => {
+  console.log("deserializeUser:", userObj);
+  done(null, userObj);
+});
+
 // cookie parser middleware
 app.use(cookieParser());
 
 app.use((req, res, next) => {
   console.log("REQ:");
   console.log(req.session);
-  console.log("USER:", req.sessionID);
-  console.log(req.cookies);
+  console.log("SessionID:", req.sessionID);
+  console.log("PASSPORT");
+  console.log(req.session.passport);
+
+  console.log("IS AUTHENTICATED");
+  console.log(req.isAuthenticated());
 
   next();
 });
-
-const user = {
-  name: "keke",
-  pass: "test1234",
-};
-
-let session;
 
 // VIEWS
 app.get("/", (req, res) => {
   res.sendFile("public/html/index.html", { root: __dirname });
 });
 app.get("/home", (req, res) => {
-  session = req.session;
-  if (session.userid) {
-    res.sendFile("public/html/home.html", { root: __dirname });
-  } else {
-    res.redirect("/");
+  console.log("HOME PAGE, is authenticated:", req.isAuthenticated());
+  if (req.isAuthenticated()) {
+    return res.sendFile("public/html/home.html", { root: __dirname });
   }
+
+  return res.redirect("/");
 });
 app.get("/fail", (req, res) => {
   res.sendFile("public/html/fail.html", { root: __dirname });
 });
 
-//LOGIN
-app.post("/login", (req, res) => {
-  const { username, password } = req.body;
-
-  if (user.name === username && user.pass === password) {
-    session = req.session;
-    session.userid = username;
-
-    //AFTER LOGIN TALLENNA SESSION ID, ESIM REDIS
-    // console.log("SUCCESFULL SIGN IN:");
-    // console.log(req.session);
-    // console.log(req.sessionID);
-
-    // RES.COOKIE, SESSION ID
-
-    res.cookie("sessionID", req.sessionID, {
-      maxAge: oneDay,
-      httpOnly: true,
-    });
-
-    return res.redirect("/home");
-  }
-
-  return res.status(401).send("wrong username or password");
-});
-
-// LOGOUT -> DESTROY SESSION, POISTA ID REDIS
-app.get("/logout", (req, res) => {
-  req.session.destroy();
-  res.cookie("sessionID", "logged out", {
-    maxAge: 1000 * 2,
-    httpOnly: true,
-  });
-  res.send("you logged out");
-});
+//AUTHENTICATION ROUTES
+app.use("/api/auth", authRouter);
 
 app.all("*", (req, res) => {
   res.status(404).send("unknown endpoint");

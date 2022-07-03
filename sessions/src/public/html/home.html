@@ -8,24 +8,25 @@
   </head>
   <body>
     <h2>You logged in!</h2>
-
-    <button id="btn-logout">Log out</button>
+    <form action="/api/auth/logout" method="get">
+      <button id="btn-logout" type="submit">Log out</button>
+    </form>
   </body>
 
   <script>
-    const logout = document.getElementById("btn-logout");
+    // const logout = document.getElementById("btn-logout");
 
-    async function handleLogout() {
-      fetch("/logout")
-        .then((res) => {
-          console.log(res);
-          if (res.ok) {
-            window.location.assign("/");
-          }
-        })
-        .catch((err) => console.log(err));
-    }
+    // async function handleLogout() {
+    //   fetch("/logout")
+    //     .then((res) => {
+    //       console.log(res);
+    //       if (res.ok) {
+    //         window.location.assign("/");
+    //       }
+    //     })
+    //     .catch((err) => console.log(err));
+    // }
 
-    logout.addEventListener("click", handleLogout);
+    // logout.addEventListener("click", handleLogout);
   </script>
 </html>
