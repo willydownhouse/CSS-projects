@@ -4,14 +4,10 @@ const { dbString } = require("./config");
 
 const PORT = 3001;
 
-console.log("before store on index");
-
+// tällä ei mitään tekemistä session storen db yhteyteen, tämä on täysin erillinen yhteys
 mongoose
-  .createConnection(dbString)
-  .asPromise()
+  .connect(dbString)
   .then(() => console.log("db connected"))
-  .catch((err) => {
-    console.log(`error connecting db`, err);
-  });
+  .catch((err) => console.log(`error conneting to db`, err));
 
 app.listen(PORT, () => console.log(`App listening port ${PORT}`));

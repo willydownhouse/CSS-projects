@@ -1,4 +1,5 @@
 const express = require("express");
+
 const path = require("path");
 const sessions = require("express-session");
 const cookieParser = require("cookie-parser");
@@ -7,6 +8,8 @@ const MongoStore = require("connect-mongo");
 const LocalStrategy = require("passport-local").Strategy;
 const { dbString } = require("./config");
 const authRouter = require("./router/authRouter");
+const authController = require("./controllers/authController");
+const User = require("./models/user");
 
 const app = express();
 
@@ -22,9 +25,9 @@ const sessionStore = MongoStore.create({
 
 //CREATES SESSION, SECRET -> .ENV
 
-console.log("before express session on app");
 app.use(
   sessions({
+    name: "sessionID",
     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
     saveUninitialized: true,
     store: sessionStore,
@@ -33,34 +36,21 @@ app.use(
   })
 );
 
-///////
-
 app.use(passport.initialize());
+// init passport on every route call
 app.use(passport.session());
+// allow passport to use "express-session"
 
-passport.use(new LocalStrategy(authUser));
+passport.use(new LocalStrategy(authController.authorizeUser));
 
-function authUser(user, password, done) {
-  const authenticated_user = {
-    name: "keke",
-    pass: "test1234",
-  };
-  console.log("AUTH USER");
-  console.log("user", user);
-  console.log("password", password);
-
-  if (user === "keke" && password === "test1234") {
-    return done(null, authenticated_user);
-  }
-
-  return done(null, false);
-}
-
+/* All the serializeUser() function does is,
+receives the "authenticated user" object from the "Strategy" framework, and attach the authenticated user to "req.session.passport.user.{..}" */
 passport.serializeUser((userObj, done) => {
   console.log("serializeUser:", userObj);
   done(null, userObj);
 });
 
+// puts user to req.user
 passport.deserializeUser((userObj, done) => {
   console.log("deserializeUser:", userObj);
   done(null, userObj);
@@ -100,6 +90,11 @@ app.get("/fail", (req, res) => {
 
 //AUTHENTICATION ROUTES
 app.use("/api/auth", authRouter);
+
+app.get("/user", (req, res) => {
+  if (!req.user) res.send("no logged in user");
+  res.send(JSON.stringify(req.user));
+});
 
 app.all("*", (req, res) => {
   res.status(404).send("unknown endpoint");
