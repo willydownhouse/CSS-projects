@@ -16,26 +16,38 @@ redis
 
 app.get("/payments", async (req, res) => {
   try {
-    const payments = await redis.get("payments");
-
-    if (payments === null) {
-      console.log("cache miss!");
+    const payments = await getOrSetCache("payments", async () => {
       const { data } = await axios.get(
         "https://random-data-api.com/api/stripe/random_stripe?size=4"
       );
 
-      redis.set("payments", JSON.stringify(data));
+      return data;
+    });
 
-      return res.json(data);
-    }
-
-    console.log("cache hit");
-
-    res.send(JSON.parse(payments));
+    res.json(payments);
   } catch (err) {
+    console.log("FROM CATCH:");
     console.log(err);
   }
 });
 
 module.exports = app;
 ///
+
+function getOrSetCache(key, cb) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const data = await redis.get(key);
+
+      if (data !== null) return resolve(JSON.parse(data));
+
+      const freshData = await cb();
+
+      redis.set(key, JSON.stringify(freshData));
+
+      return resolve(freshData);
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
